@@ -79,9 +79,10 @@ const ensureSafeOrigin = (req: express.Request, res: express.Response, next: exp
 	}
 }
 
-const protectSiteFromHacking = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const protectSiteFromHacking = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 	try {
-		const numberOfUsersInData = 11;
+		const users = await User.find();
+		const numberOfUsersInData = users.length;
 		if (numberOfUsersInData > 20) {
 			res.status(500).send('hacker protection: too many users in database');
 		} else {
