@@ -9,7 +9,8 @@ content-type: application/json
  
 {
     "username": "hd",
-    "password": "hd123"
+    "password": "hd123",
+    "safeOriginCode": "1234567"
 }
 
 ### LOGIN ANDREA
@@ -18,7 +19,8 @@ content-type: application/json
  
 {
     "username": "an",
-    "password": "an123"
+    "password": "an123",
+    "safeOriginCode": "1234567"
 }
 
 ### GET CURRENT USER

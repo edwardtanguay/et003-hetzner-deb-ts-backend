@@ -69,13 +69,13 @@ const ensureSafeOrigin = (req: express.Request, res: express.Response, next: exp
 	try {
 		const safeOriginCode = req.body?.safeOriginCode;
 		if (safeOriginCode !== process.env.SAFE_ORIGIN_CODE) {
-			res.status(500).send('no access');
+			res.status(500).send('no access: safeOrigin failed');
 		} else {
 			next();
 		}
 	}
 	catch (e) {
-		res.status(500).send('no access');
+		res.status(500).send('no access: something went wrong in ensureSafeOrigin');
 	}
 }
 
@@ -124,7 +124,7 @@ app.post('/login', ensureSafeOrigin, (req: express.Request, res: express.Respons
 		logUserIn(username, password, req, res);
 	}
 	catch (e) {
-		res.status(500).send('no access');
+		res.status(500).send('no access: something went wrong');
 	}
 });
 
