@@ -79,6 +79,20 @@ const ensureSafeOrigin = (req: express.Request, res: express.Response, next: exp
 	}
 }
 
+const protectSiteFromHacking = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+	try {
+		const numberOfUsersInData = 11;
+		if (numberOfUsersInData > 20) {
+			res.status(500).send('hacker protection: too many users in database');
+		} else {
+			next();
+		}
+	}
+	catch (e) {
+		res.status(500).send('no access: something went wrong in ensureSafeOrigin');
+	}
+}
+
 const loginSecondsMax = 10;
 
 const logAnonymousUserIn = async (req: express.Request, res: express.Response) => {
@@ -128,7 +142,7 @@ app.post('/login', ensureSafeOrigin, (req: express.Request, res: express.Respons
 	}
 });
 
-app.post('/register', ensureSafeOrigin, async (req: express.Request, res: express.Response) => {
+app.post('/register', [ensureSafeOrigin, protectSiteFromHacking], async (req: express.Request, res: express.Response) => {
 	try {
 		const username = req.body.username;
 		const password = req.body.password;
